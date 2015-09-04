@@ -68,24 +68,27 @@ module.exports = function hashmark(contents, options, callback) {
                         if (err) {
                             return mapEvents.emit('error', err);
                         }
-                        mapEvents.emit('file', stream.fileName, fileName);
+                        mapEvents.emit('file', stream.fileName, fileName, options.basePath);
                     });
                 } else {
                     fs.writeFile(fileName, contents, function (err) {
                         if (err) {
                             return mapEvents.emit('error', err);
                         }
-                        mapEvents.emit('file', stream.fileName, fileName);
+                        mapEvents.emit('file', stream.fileName, fileName, options.basePath);
                     });
                 }
 
             } else {
-                mapEvents.emit('file', stream.fileName, digest);
+                mapEvents.emit('file', stream.fileName, digest, options.basePath);
             }
         });
         stream.pipe(hash, { end: false });
     });
-    return mapEvents.on('file', function (fileName, newFileName) {
+    return mapEvents.on('file', function (fileName, newFileName, basePath) {
+        if (basePath) {
+            newFileName = newFileName.replace(basePath, '');
+        }
         map[fileName] = newFileName;
         fileCount--;
         if (fileCount === 0) {

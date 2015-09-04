@@ -45,6 +45,12 @@ cli
             'boolean',
             false
         ],
+        'basePath': [
+            'b',
+            'Remove this path from the beginning of the new filename in the asset map',
+            'string',
+            null
+        ],
     });
 
 if (!cli.args.length) {
