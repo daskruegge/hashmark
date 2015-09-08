@@ -64,14 +64,14 @@ module.exports = function hashmark(contents, options, callback) {
                 var fileName = parseFilePattern(options.pattern, stream.fileName, digest);
 
                 if (options.rename === true ) {
-                    fs.rename(stream.fileName, fileName, function (err) {
+                    fs.rename(stream.fileName, options.outpath + fileName, function (err) {
                         if (err) {
                             return mapEvents.emit('error', err);
                         }
-                        mapEvents.emit('file', stream.fileName, fileName, options.basePath);
+                        mapEvents.emit('file', stream.fileName, fileName);
                     });
                 } else {
-                    fs.writeFile(fileName, contents, function (err) {
+                    fs.writeFile(options.outpath + fileName, contents, function (err) {
                         if (err) {
                             return mapEvents.emit('error', err);
                         }
@@ -85,10 +85,7 @@ module.exports = function hashmark(contents, options, callback) {
         });
         stream.pipe(hash, { end: false });
     });
-    return mapEvents.on('file', function (fileName, newFileName, basePath) {
-        if (basePath) {
-            newFileName = newFileName.replace(basePath, '');
-        }
+    return mapEvents.on('file', function (fileName, newFileName) {
         map[fileName] = newFileName;
         fileCount--;
         if (fileCount === 0) {

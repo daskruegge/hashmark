@@ -19,6 +19,9 @@ cat file.js | ./bin/hashmark -l 8 'file.{hash}.js' # Writes to test.3eae1599.js
 cat file.js | ./bin/hashmark -l 4 -d md5 'dist/{hash}.js' # Writes to dist/cbd8.js
 > Computed hash: cbd8
 >
+cat file.js | ./bin/hashmark -l 4 -d md5 -o 'dist/' '{hash}.js' # Also writes to dist/cbd8.js but only writes cbd8.js as value to the asset map
+> Computed hash: cbd8
+>
 ```
 
 It is useful to use globs — meaning you can read in many files and it will output

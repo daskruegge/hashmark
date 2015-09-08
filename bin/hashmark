@@ -45,11 +45,11 @@ cli
             'boolean',
             false
         ],
-        'basePath': [
-            'b',
-            'Remove this path from the beginning of the new filename in the asset map',
+        'outpath': [
+            'o',
+            'Path of the output folder to write hashed copies to (not available if rename=true)',
             'string',
-            null
+            ''
         ],
     });
 
