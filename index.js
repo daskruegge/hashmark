@@ -75,12 +75,12 @@ module.exports = function hashmark(contents, options, callback) {
                         if (err) {
                             return mapEvents.emit('error', err);
                         }
-                        mapEvents.emit('file', stream.fileName, fileName, options.basePath);
+                        mapEvents.emit('file', stream.fileName, fileName);
                     });
                 }
 
             } else {
-                mapEvents.emit('file', stream.fileName, digest, options.basePath);
+                mapEvents.emit('file', stream.fileName, digest);
             }
         });
         stream.pipe(hash, { end: false });
